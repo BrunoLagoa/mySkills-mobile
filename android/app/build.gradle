@@ -176,11 +176,11 @@ android {
             variant.outputs.all {
               def currentFile = new File(outputFileName)
               def filename = currentFile.getName()
-              outputFileName = "../../../../../Application/Application/build/outputs/apk/${filename}"
+              // outputFileName = "../../../../../Application/Application/build/outputs/apk/${filename}"
+              outputFileName = "../../../../../app/build/outputs/apk/${filename}"
             }
           }
         }
-    }
 
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
