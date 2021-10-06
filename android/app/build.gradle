@@ -78,7 +78,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: true,  // clean and rebuild if changing
+    enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -91,12 +91,12 @@ apply from: "../../node_modules/react-native/react.gradle"
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
-def enableSeparateBuildPerCPUArchitecture = true
+def enableSeparateBuildPerCPUArchitecture = false
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -131,7 +131,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.brunocastro.myskills"
+        applicationId "com.myskills"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -159,6 +159,17 @@ android {
             keyAlias 'production-android'
             keyPassword '123456'
         }
+
+        appcenter {
+          applicationVariants.all { variant ->
+            variant.outputs.all {
+              def currentFile = new File(outputFileName)
+              def filename = currentFile.getName()
+              // outputFileName = "../../../../../Application/Application/build/outputs/apk/${filename}"
+              // outputFileName = "../../../../../app/build/outputs/apk/${filename}"
+            }
+          }
+        }
     }
     buildTypes {
         debug {
@@ -170,16 +181,6 @@ android {
             // signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
-        appcenter {
-          applicationVariants.all { variant ->
-            variant.outputs.all {
-              def currentFile = new File(outputFileName)
-              def filename = currentFile.getName()
-              // outputFileName = "../../../../../Application/Application/build/outputs/apk/${filename}"
-              outputFileName = "../../../../../app/build/outputs/apk/${filename}"
-            }
-          }
         }
     }
 
